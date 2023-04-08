@@ -2,12 +2,12 @@
 using ECommerceAPI.Application.RequestParameters;
 using MediatR;
 
-namespace ECommerceAPI.Application.Features.Queries.GetAllProduct
+namespace ECommerceAPI.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetAllProductQueryHandler : IRequestHandler<GetAllProductQueryRequest, GetAllProductQueryResponse>
     {
         readonly IProductReadRepository _productReadRepository;
-        public GetAllProductQueryHandler( IProductReadRepository productReadRepository)
+        public GetAllProductQueryHandler(IProductReadRepository productReadRepository)
         {
 
             _productReadRepository = productReadRepository;
