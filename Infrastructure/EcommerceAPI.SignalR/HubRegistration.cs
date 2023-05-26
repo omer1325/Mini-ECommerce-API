@@ -7,7 +7,8 @@ namespace EcommerceAPI.SignalR
     {
         public static void MapHubs(this WebApplication webApplication)
         {
-            webApplication.MapHub<ProductHub>("/product-hubs");
+            webApplication.MapHub<ProductHub>("/products-hubs");
+            webApplication.MapHub<OrderHub>("/orders-hubs");
         }
     }
 }

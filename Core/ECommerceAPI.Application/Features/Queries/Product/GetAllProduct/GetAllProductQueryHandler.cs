@@ -17,7 +17,7 @@ namespace ECommerceAPI.Application.Features.Queries.Product.GetAllProduct
         }
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Get all produtcs");
+            _logger.LogInformation("Get all products");
 
             var totalProductCount = _productReadRepository.GetAll(false).Count();
 

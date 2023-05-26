@@ -1,5 +1,4 @@
-﻿using ECommerceAPI.Application.RequestParameters;
-using MediatR;
+﻿using MediatR;
 
 namespace ECommerceAPI.Application.Features.Queries.Product.GetAllProduct
 {
