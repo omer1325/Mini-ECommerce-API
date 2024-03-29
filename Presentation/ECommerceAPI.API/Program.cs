@@ -1,6 +1,7 @@
 ﻿using EcommerceAPI.SignalR;
 using ECommerceAPI.API.Configurations.ColumnWriters;
 using ECommerceAPI.API.Extensions;
+using ECommerceAPI.API.Filters;
 using ECommerceAPI.Application;
 using ECommerceAPI.Application.Validators.Products;
 using ECommerceAPI.Infrastructure.Filters;
@@ -65,7 +66,11 @@ builder.Services.AddHttpLogging(logging =>
 
 });
 
-builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>())
+builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add<ValidationFilter>();
+        options.Filters.Add<RolePermissionFilter>();
+    })
     .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>())
     //ASP.NetCore'un default  filterlarını baskılıyoruz ve kendi yazdığımız valitasyonları filtrelemesini sağlıyoruz.
     .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);

@@ -51,7 +51,7 @@ namespace ECommerceAPI.API.Controllers
         public async Task<IActionResult> PasswordReset([FromBody] PasswordResetCommandRequest passwordResetCommandRequest)
         {
             PasswordResetCommandResponse response = await _mediator.Send(passwordResetCommandRequest);
-            return Ok();
+            return Ok(response);
         }
 
         [HttpPost("verify-reset-token")]

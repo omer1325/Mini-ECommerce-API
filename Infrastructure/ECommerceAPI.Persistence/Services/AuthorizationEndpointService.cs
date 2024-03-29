@@ -5,6 +5,7 @@ using ECommerceAPI.Domain.Entities;
 using ECommerceAPI.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ECommerceAPI.Persistence.Services
 {
@@ -47,6 +48,7 @@ namespace ECommerceAPI.Persistence.Services
 
             Endpoint? endpoint = await _endpointReadRepository.Table.Include(e => e.Menu).Include(e => e.Roles).FirstOrDefaultAsync(e => e.Code == code && e.Menu.Name == menu);
 
+
             if (endpoint == null)
             {
                 var action = _applicationService.GetAuthorizeDefinitionEndpoints(type)
@@ -70,10 +72,22 @@ namespace ECommerceAPI.Persistence.Services
             foreach (var role in endpoint.Roles)
                 endpoint.Roles.Remove(role);
 
-            var appRoles = await _roleManager.Roles.Where(r => roles.Contains(r.Name)).ToListAsync();
 
-            foreach (var role in appRoles)
-                endpoint.Roles.Add(role);
+            //var test = _roleManager.Roles.ToList();
+            //{ "text1", "testtest", "test1test2", "test2text1" };
+
+
+            foreach (var role in roles)
+            {
+                var appRoles = await _roleManager.Roles.Where(r => role.Contains(r.Name)).ToListAsync();
+                endpoint.Roles.Add(appRoles[0]);
+            }
+           
+      
+
+
+            //foreach (var role in appRoles)
+            //    endpoint.Roles.Add(role);
 
             await _endpointWriteRepository.SaveAsync();
         }
