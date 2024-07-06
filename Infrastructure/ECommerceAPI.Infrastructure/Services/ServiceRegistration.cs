@@ -20,6 +20,8 @@ namespace ECommerceAPI.Infrastructure.Services
             serviceCollection.AddScoped<ITokenHandler, TokenHandler>();
             serviceCollection.AddScoped<IMailService, MailService>();
             serviceCollection.AddScoped<IApplicationService, ApplicationService>();
+            serviceCollection.AddScoped<IQRCodeService, QRCodeService>();
+
 
         }
 

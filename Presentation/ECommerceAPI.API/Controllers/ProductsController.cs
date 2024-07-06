@@ -1,4 +1,5 @@
-﻿using ECommerceAPI.Application.Consts;
+﻿using ECommerceAPI.Application.Abstractions.Services;
+using ECommerceAPI.Application.Consts;
 using ECommerceAPI.Application.CustomAttributes;
 using ECommerceAPI.Application.DTOs.Configuration;
 using ECommerceAPI.Application.Enums;
@@ -23,9 +24,11 @@ namespace ECommerceAPI.API.Controllers
     public class ProductsController : ControllerBase
     {
         readonly IMediator _mediator;
-        public ProductsController(IMediator mediator)
+        readonly IProductService _productService;
+        public ProductsController(IMediator mediator, IProductService productService)
         {
             _mediator = mediator;
+            _productService = productService;
         }
 
         [HttpGet("{Id}")]
@@ -33,6 +36,13 @@ namespace ECommerceAPI.API.Controllers
         {
             GetByIdProductQueryResponse response = await _mediator.Send(getByIdProductQueryRequest);
             return Ok(response);
+        }
+
+        [HttpGet("qrcode/{productId}")]
+        public async Task<IActionResult> GetQRCodeToProduct([FromRoute] string productId)
+        {
+            var data = await _productService.QRCodeToProductAsync(productId);
+            return File(data, "image/png");
         }
 
         [HttpGet]
